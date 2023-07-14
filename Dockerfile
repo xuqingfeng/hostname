@@ -1,7 +1,15 @@
-FROM busybox:1.26
+FROM golang:1.20 as builder
 
-COPY ./hostname /app/hostname
+WORKDIR /src
 
-WORKDIR "/app"
+COPY . .
+
+RUN go build -o hostname main.go
+
+FROM busybox:stable
+
+WORKDIR /app
+
+COPY --from=builder /src/hostname /app/hostname
 
 CMD ["./hostname"]
