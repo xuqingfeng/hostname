@@ -12,4 +12,6 @@ WORKDIR /app
 
 COPY --from=builder /src/hostname /app/hostname
 
+EXPOSE 8000
+
 CMD ["./hostname"]
